@@ -1,0 +1,142 @@
+<html>  
+<head>  
+    <title>employee data</title>  
+    <script>  
+        var Database_Name = 'empdatabse';  
+        var Version = 1.0;  
+        var Text_Description = 'My First Web-SQL Example';  
+        var Database_Size = 5* 1024 * 1024;  
+        var dbObj = openDatabase(Database_Name, Version, Text_Description, Database_Size);  
+        dbObj.transaction(function (tx) {  
+            tx.executeSql('CREATE TABLE IF NOT EXISTS Employeedata(Employee_Id unique,Employee_Name,Employee_Salary,Employee_Joiningdate)');  
+        });  
+  
+        function Insertdata() {   
+            var emp_id = document.getElementById("emp_id").value;  
+            var emp_name = document.getElementById("emp_name").value; 
+            var emp_sal = document.getElementById("emp_sal").value; 
+            var emp_joiningdate = document.getElementById("emp_joiningdate").value; 
+            dbObj.transaction(function (tx) {  
+                tx.executeSql('insert into Employeedata(Employee_Id,Employee_Name,Employee_Salary,Employee_Joiningdate) values("' + emp_id + '","' + emp_name + '","'+ emp_sal +'","'+ emp_joiningdate +'")');  
+            });  
+        }  
+        dbObj.transaction(function (tx) {  
+            tx.executeSql('SELECT * FROM Employeedata', [], function (tx, results) {  
+                var len = results.rows.length, i;  
+                var str = '';  
+                for (i = 0; i < len; i++) {  
+                str += "<tr>";  
+                str += "<td>" + results.rows.item(i).Employee_Id + "</td>";  
+                str += "<td>" + results.rows.item(i).Employee_Name + "</td>";  
+                str += "<td>" + results.rows.item(i).Employee_Salary + "</td>"; 
+                str += "<td>" + results.rows.item(i).Employee_Joiningdate+ "</td>"; 
+                str += "</tr>";  
+                document.getElementById("tblGrid").innerHTML += str;  
+                str = '';  
+                }  
+            }, null);  
+        }); 
+        function Deletedata(){
+            var deleteid= document.getElementById("delete1").value;
+            dbObj.transaction(function (tx){
+                tx.executeSql('delete from Employeedata where Employee_Id="'+deleteid+'"');
+            });
+        }
+        function Modifydata(){
+            var modify1 = document.getElementById("emp14").value;
+            dbObj.transaction(function (tx){
+                tx.executeSql('update Employeedata set Employee_Salary=Employee_Salary+1000 where Employee_Name = "'+A%+'"');
+            });
+        } 
+        function Countdata(){
+            //var count1 = document.getElementById("emp18").value;
+            var count1 = 0;
+            dbObj.transaction(function (tx){
+                tx.executeSql('select count(Employee_Id) as i from Employeedata',[],function(tx,results){
+                    count1=results.rows.length.i;
+                    document.getElementById("demo").innerHTML = count1;
+                },null);
+               
+            });
+            // document.getElementById("demo").innerHTML = count1;
+        }
+
+        function Searchdata(){
+
+        }
+        function printsal(){
+
+        }
+        function printascending(){
+
+        }
+        function printrecord(){
+
+        }
+    </script>  
+</head>  
+<body>  
+    <p id="hh"></p>  
+    <form id="frm1">  
+        <table>  
+            <tr>  
+                <td>EMPLOYEE ID:</td>  
+                <td><input type="text" id="emp_id" /></td>  
+            </tr>  
+            <tr>  
+                <td>EMPLOYEE NAME:</td>  
+                <td><input type="text" id="emp_name" /></td>  
+            </tr>  
+            <tr>    
+                <td>SALARY:</td>  
+                <td><input type="text" id="emp_sal" /></td>  
+            </tr>  
+             <tr>    
+                <td>JOINING DATE:</td>  
+                <td><input type="date" id="emp_joiningdate" /></td>  
+            </tr>  
+               <td><button id="emp12" onclick="Insertdata()">Insert Data</button></td>  
+            </tr>  
+            </tr>  
+               <td><button id="emp13" onclick="Deletedata()">Delete Data</button></td>
+               <td><input type="text" id="delete1" name=""></td>
+            </tr>  
+            </tr>  
+               <td><button id="emp14" onclick="Modifydata()"> Modify Employee Details with salary increment by 1000 whoes name starts with 'A' letter</button></td>  
+            </tr>  
+            </tr>  
+               <td><button id="emp18" onclick="Countdata()">Count Data</button></td>  
+               <p id="demo"></p>
+            </tr>  
+            </tr>  
+               <td><button id="emp15" onclick="Searchdata()">Search Data</button></td>
+               <td><input type="text" id="s1" name=""></td>  
+            </tr>  
+            </tr>  
+               <td><button id="emp16" onclick="printascending()">print ascending order of records using names</button></td></tr> 
+            </tr>  
+               <td><button id="emp17" onclick="printsal()"> print Employee records whoes salary is above average salary of all the Employees</button></td>  
+            </tr> 
+            </tr>  
+               <td><button id="emp18" onclick="printrecord()">print record/records who have joined in the month of Jan</button></td>  
+            </tr> 
+        </table>  
+    </form>  
+    <table id="tblGrid" cellpadding="10px" cellspacing="0" border="1">  
+        <tr style="background-color:black;color:white;font-size:18px;">   
+            <td>  
+                Employee Id
+            </td>  
+            <td>  
+                Employee Name
+            </td>  
+            <td>  
+                Salary
+            </td>  
+            <td>  
+                Joining Date
+            </td>  
+        </tr>  
+    </table>  
+</body>  
+</html>

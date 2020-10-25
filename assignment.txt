@@ -13,14 +13,14 @@ acceptOranizationDetails
 displayOranizationDetails
 
 5] Search operation with marking in Yellow below searching word
-
+	
 6] Create array of Employees with details empId,name,salary,joiningDate,
    features push,pop,display in table format all records
    search particular Employee using empId
-   Modify Employee Details with salary increment by 1000 whoes name starts 			with 'A' letter
+   Modify Employee Details with salary increment by 1000 whoes name starts with 'A' letter
    count total records
    print ascending order of records using names
-   print Employee records whoes salary is above average salary of all the 		Employees
+   print Employee records whoes salary is above average salary of all the Employees
    print record/records who have joined in the month of Jan
       
 
