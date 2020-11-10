@@ -1,13 +1,13 @@
-package com.training.org;
 
-import java.util.List;
+package com.training.org;
 
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
 public class StudentJDBCTemplate implements StudentDAO{
-    private DataSource dataSource;
+    @SuppressWarnings("unused")
+	private DataSource dataSource;
     private JdbcTemplate jdbcTemplateObject;
     
     public void setDataSource(DataSource dataSource) {
@@ -17,23 +17,11 @@ public class StudentJDBCTemplate implements StudentDAO{
 
     @Override
     public void create(Integer id, String name, Integer age) {
-        String query="insert into Student(name,age) values (?,?)";
+        String query="insert into student(name,age) values (?,?)";
         jdbcTemplateObject.update(query,name,age);
         System.out.println("Record inserted into student table ");
     }
-
-    @Override
-    public List<Student> listStudents() {
-        String SQL="select * from student";
-        List<Student> student=jdbcTemplateObject.query(SQL, new StudentMapper());
-        return student;
-    }
-    @Override
-    public void update(Integer id,Integer age) {
-    	String SQL="update student set age=? where id=?";
-    	jdbcTemplateObject.update(SQL,age,id);
-    	System.out.println("record is updated with id"+id);
-    }
+    
     
      
     
